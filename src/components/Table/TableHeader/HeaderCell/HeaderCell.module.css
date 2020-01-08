@@ -1,0 +1,12 @@
+.headerCell {
+    font-weight: bold;
+    border: 1px solid #7b7b7b;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #08a57a;
+}
