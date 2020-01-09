@@ -6,13 +6,12 @@ import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
 import {BrowserRouter} from 'react-router-dom';
 
-import data from './profiles';
 import store from "./redux/store";
 
 ReactDOM.render(
     <BrowserRouter>
     <Provider store={store}>
-        <App data={data}/>
+        <App />
     </Provider>
     </BrowserRouter>, document.getElementById('root'));
 

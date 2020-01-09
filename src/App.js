@@ -1,22 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Route, withRouter} from 'react-router-dom';
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {setData, setKeys} from "./redux/reducer";
-import {TableContainer} from "./components/Table/TableContainer";
-import style from './App.module.css';
+import {TableContainer} from "./components/Table/Table";
+import {initializeApp} from "./redux/reducer";
 
-class App extends React.Component {
-    render() {
-        const keys = Object.keys(this.props.data[0]);
-        this.props.setKeys(keys);
-        this.props.setData(this.props.data);
+const App = (props) => {
+
+    useEffect(() => {
+        props.initializeApp()
+    }, []);
+
+    if (!props.initialized) {
         return (
-            <div className={style.layout}>
-                <Route path='/:keySorted?' render={() => <TableContainer/>}/>
-            </div>
-        );
+            <div>Loading...</div>
+        )
     }
-}
+    return (
+        <div>
+            <Route path='/:keySorted?/:sortType?' render={() => <TableContainer/>}/>
+        </div>
+    );
 
-export default compose(connect(null, {setData, setKeys}), withRouter)(App);
+};
+
+const mapStateToProps = (state) => {
+    return {
+        initialized: state.initialized
+    }
+};
+
+export default compose(connect(mapStateToProps, {initializeApp}), withRouter)(App);

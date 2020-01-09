@@ -4,6 +4,7 @@
     text-align: center;
     cursor: pointer;
     width: 100%;
+    min-width: 370px;
 }
 
 a {

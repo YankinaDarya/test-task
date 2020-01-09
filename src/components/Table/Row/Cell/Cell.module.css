@@ -1,6 +1,6 @@
 .cell {
     border: 1px solid #7b7b7b;
     color: #313131;
-    text-align: center;
     width: 100%;
+    min-width: 370px;
 }

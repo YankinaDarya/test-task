@@ -3,7 +3,7 @@ import style from './TableHeader.module.css';
 import HeaderCell from "./HeaderCell/HeaderCell";
 
 const TableHeader = (props) => {
-    const headerCells = props.headers.map(c => <HeaderCell name={c} directSort={props.directSort}/>);
+    const headerCells = props.headers.map(c => <HeaderCell name={c}/>);
     return (
         <div className={style.header}>
             {headerCells}
