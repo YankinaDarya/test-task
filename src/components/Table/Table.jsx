@@ -1,48 +1,43 @@
-import React, {useEffect} from 'react';
-import TableHeader from "./TableHeader/TableHeader";
-import Row from "./Row/Row";
-import {directSort, reversedSort} from "../../redux/reducer";
-import {connect} from "react-redux";
-import {withRouter} from 'react-router-dom';
-import {compose} from "redux";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { directSort, reversedSort } from '../../actions/actions';
+import Row from './Row/Row';
+import TableHeader from './TableHeader/TableHeader';
 
-const Table = (props) => {
+const Table = props => {
 
-    function changes() {
-        const keySorted = props.match.params.keySorted;
-        const sortType = props.match.params.sortType;
-        if (keySorted !== undefined) {
-            if (sortType === 'direct') {
-                props.directSort(keySorted);
-            } else if (sortType === 'reversed') {
-                props.reversedSort(keySorted);
-            }
-        }
+  useEffect(() => {
+    const keySorted = props.match.params.keySorted;
+    const sortType = props.match.params.sortType;
+    if (keySorted !== undefined) {
+      if (sortType === 'direct') {
+        props.directSort(keySorted);
+      } else if (sortType === 'reversed') {
+        props.reversedSort(keySorted);
+      }
     }
+  }, [props.match.params.keySorted, props.match.params.sortType]);
 
-    useEffect(() => {
-        changes();
-    }, []);
+  const renderRow = props.data.map(obj => <Row obj={obj} key={obj.Name} />);
 
-    useEffect(() => {
-        changes()
-    }, [props.match.params.keySorted, props.match.params.sortType]);
-
-    const row = props.data.map(obj => <Row obj={obj}/>);
-
-    return (
-        <div>
-            <TableHeader headers={props.headers}/>
-            {row}
-        </div>
-    );
+  return (
+    <div>
+      <TableHeader headers={props.headers} />
+      {renderRow}
+    </div>
+  );
 };
 
-let mapStateToProps = (state) => {
-    return {
-        data: state.profiles,
-        headers: state.keys
-    }
+const mapStateToProps = state => {
+  return {
+    data: state.profiles,
+    headers: state.keys,
+  };
 };
 
-export const TableContainer = compose(connect(mapStateToProps, {directSort, reversedSort}), withRouter)(Table);
+export const TableContainer = compose(
+  connect(mapStateToProps, { directSort, reversedSort }),
+  withRouter
+)(Table);

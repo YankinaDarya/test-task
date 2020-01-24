@@ -1,7 +1,9 @@
-import * as axios from "axios";
+import * as axios from 'axios';
 
 export const dataAPI = {
   getData() {
-      return axios.get('https://raw.githubusercontent.com/blmzv/ah-frontend-intern/master/profiles.json')
-  }
+    return axios.get(
+      'https://raw.githubusercontent.com/blmzv/ah-frontend-intern/master/profiles.json'
+    );
+  },
 };
