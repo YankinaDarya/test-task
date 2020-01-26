@@ -1,3 +1,5 @@
+// @flow
+
 import React, { useEffect } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -20,7 +22,7 @@ const App = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: Object): Object => {
   return {
     initialized: state.initialized,
   };

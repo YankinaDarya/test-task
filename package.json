@@ -20,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write \"src/**/*.jsx\" \"src/**/*.js\""
+    "prettier": "prettier --write \"src/**/*.jsx\" \"src/**/*.js\"",
+    "prepublish": "yarn run build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +39,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-flow": "^7.8.3",
+    "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-config-standard": "^14.1.0",
@@ -47,6 +52,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-standard": "^4.0.1",
+    "flow-bin": "^0.116.1",
     "husky": "^4.2.1",
     "lint-staged": "^10.0.2",
     "prettier": "^1.19.1",

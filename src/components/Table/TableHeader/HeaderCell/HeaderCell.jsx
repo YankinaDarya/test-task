@@ -1,18 +1,25 @@
+// @flow
+
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import style from './HeaderCell.module.css';
 
+const SORT_TYPES = {
+  direct: 'direct',
+  reversed: 'reversed',
+};
+
 const HeaderCell = props => {
-  const prevKey = props.match.params.keySorted;
-  const prevSort = props.match.params.sortType;
+  const prevKey: ?string = props.match.params.keySorted;
+  const prevSort: ?string = props.match.params.sortType;
   let url = '/';
   if (prevKey !== props.name) {
-    url = '/' + props.name + '/direct';
+    url = '/' + props.name + `/${SORT_TYPES.direct}`;
   } else {
-    if (prevSort === 'direct') {
-      url = '/' + props.name + '/reversed';
-    } else if (prevSort === 'reversed') {
-      url = '/' + props.name + '/direct';
+    if (prevSort === SORT_TYPES.direct) {
+      url = '/' + props.name + `/${SORT_TYPES.reversed}`;
+    } else if (prevSort === SORT_TYPES.reversed) {
+      url = '/' + props.name + `/${SORT_TYPES.direct}`;
     }
   }
   return (

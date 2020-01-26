@@ -12,6 +12,7 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
   },
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -30,6 +31,6 @@ module.exports = {
       { 'ignore': 'ignore', 'customValidators': 'customValidator' }
     ],
     'import/order': ['error', {'groups': ['builtin', 'external', 'parent',
-        'sibling', 'index']}]
+        'sibling', 'index']}],
   }
 };

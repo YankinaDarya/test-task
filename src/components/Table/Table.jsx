@@ -1,3 +1,5 @@
+// @flow
+
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -6,15 +8,19 @@ import { directSort, reversedSort } from '../../actions/actions';
 import Row from './Row/Row';
 import TableHeader from './TableHeader/TableHeader';
 
-const Table = props => {
+const SORT_TYPES = {
+  direct: 'direct',
+  reversed: 'reversed',
+};
 
+const Table = props => {
   useEffect(() => {
-    const keySorted = props.match.params.keySorted;
-    const sortType = props.match.params.sortType;
+    const keySorted: ?string = props.match.params.keySorted;
+    const sortType: ?string = props.match.params.sortType;
     if (keySorted !== undefined) {
-      if (sortType === 'direct') {
+      if (sortType === SORT_TYPES.direct) {
         props.directSort(keySorted);
-      } else if (sortType === 'reversed') {
+      } else if (sortType === SORT_TYPES.reversed) {
         props.reversedSort(keySorted);
       }
     }
@@ -30,7 +36,7 @@ const Table = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: Object) => {
   return {
     data: state.profiles,
     headers: state.keys,
