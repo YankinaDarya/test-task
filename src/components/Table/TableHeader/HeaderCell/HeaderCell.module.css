@@ -5,6 +5,9 @@
     cursor: pointer;
     width: 100%;
     min-width: 370px;
+    padding: 5px 5px;
+    font-size: 20px;
+    font-style: italic;
 }
 
 a {

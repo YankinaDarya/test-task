@@ -5,15 +5,23 @@ import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { TableContainer } from './components/Table/Table';
+import { Preloader } from './components/Preloader/Preloader';
 import { initializeApp } from './redux/reducer';
+import style from './App.module.css';
 
 const App = props => {
   useEffect(() => {
     props.initializeApp();
   }, []);
 
-  if (!props.initialized) {
-    return <div>Loading...</div>;
+  if (props.status[0]) {
+    return <Preloader />;
+  } else if (props.status[1]) {
+    return (
+      <div className={style.error}>
+        Attention! An error occurred: {props.error}
+      </div>
+    );
   }
   return (
     <div>
@@ -24,7 +32,8 @@ const App = props => {
 
 const mapStateToProps = (state: Object): Object => {
   return {
-    initialized: state.initialized,
+    status: state.status,
+    error: state.error,
   };
 };
 

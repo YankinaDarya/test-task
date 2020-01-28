@@ -4,28 +4,28 @@ import { dataAPI } from '../api/api';
 import {
   SET_DATA,
   SET_KEYS,
-  INITIALIZED_SUCCESS,
-  DIRECT_SORT,
-  REVERSED_SORT,
+  SORT,
+  SET_STATUS,
+  SET_ERROR,
   setKeys,
   setData,
-  initializedSuccess,
+  setStatus,
+  setError,
 } from '../actions/actions';
+
+const STATUSES = {
+  loading: false,
+  error: false,
+  success: false,
+};
 
 const initialState = {
   profiles: [],
   keys: [],
-  initialized: false,
-};
-
-const Sort = (key: string, ...profilesArray: Array<Object>): Array<Object> => {
-  return profilesArray.sort((obj1: Object, obj2: Object) =>
-    obj1[key].toLowerCase() > obj2[key].toLowerCase()
-      ? 1
-      : obj2[key].toLowerCase() > obj1[key].toLowerCase()
-      ? -1
-      : 0
-  );
+  status: [STATUSES.loading, STATUSES.error, STATUSES.success],
+  error: '',
+  currentKey: '',
+  currentType: '',
 };
 
 const reducer = (state: Object = initialState, action: Object): Object => {
@@ -40,20 +40,21 @@ const reducer = (state: Object = initialState, action: Object): Object => {
         ...state,
         keys: action.keys,
       };
-    case INITIALIZED_SUCCESS:
+    case SET_STATUS:
       return {
         ...state,
-        initialized: true,
+        status: [...action.status],
       };
-    case DIRECT_SORT:
+    case SORT:
       return {
         ...state,
-        profiles: Sort(action.key, ...state.profiles),
+        currentKey: action.key,
+        currentType: action.sortType,
       };
-    case REVERSED_SORT:
+    case SET_ERROR:
       return {
         ...state,
-        profiles: Sort(action.key, ...state.profiles).reverse(),
+        error: action.error,
       };
     default:
       return state;
@@ -64,18 +65,18 @@ export default reducer;
 
 export const getProfiles = () => (dispatch: any): Object => {
   return dataAPI.getData().then(response => {
-    try {
+    if (response.status === 200) {
       dispatch(setKeys(Object.keys(response.data[0])));
       dispatch(setData(response.data));
-    } catch (e) {
-      alert(response.statusText);
+      dispatch(setStatus([false, false, true]));
+    } else {
+      dispatch(setStatus([false, true, false]));
+      dispatch(setError(`${response.status} ${response.statusText}`));
     }
   });
 };
 
 export const initializeApp = () => (dispatch: any) => {
-  const promise = dispatch(getProfiles());
-  Promise.all([promise]).then(() => {
-    dispatch(initializedSuccess());
-  });
+  dispatch(setStatus([true, false, false]));
+  dispatch(getProfiles());
 };
