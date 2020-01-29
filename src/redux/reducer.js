@@ -4,7 +4,7 @@ import { dataAPI } from '../api/api';
 import {
   SET_DATA,
   SET_KEYS,
-  SORT,
+  SET_SORT_PARAMS,
   SET_STATUS,
   SET_ERROR,
   setKeys,
@@ -28,7 +28,17 @@ const initialState = {
   currentType: '',
 };
 
-const reducer = (state: Object = initialState, action: Object): Object => {
+const reducer = (
+  state: Object = initialState,
+  action: Object
+): {
+  profiles: Array<{ obj: string }>,
+  keys: Array<string>,
+  status: Array<boolean>,
+  error: string,
+  currentKey: string,
+  currentType: string,
+} => {
   switch (action.type) {
     case SET_DATA:
       return {
@@ -45,7 +55,7 @@ const reducer = (state: Object = initialState, action: Object): Object => {
         ...state,
         status: [...action.status],
       };
-    case SORT:
+    case SET_SORT_PARAMS:
       return {
         ...state,
         currentKey: action.key,
@@ -63,7 +73,7 @@ const reducer = (state: Object = initialState, action: Object): Object => {
 
 export default reducer;
 
-export const getProfiles = () => (dispatch: any): Object => {
+export const getProfiles = () => (dispatch: any) => {
   return dataAPI.getData().then(response => {
     if (response.status === 200) {
       dispatch(setKeys(Object.keys(response.data[0])));

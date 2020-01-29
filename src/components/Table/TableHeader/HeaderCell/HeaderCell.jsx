@@ -12,7 +12,7 @@ const SORT_TYPES = {
 const HeaderCell = props => {
   const prevKey: ?string = props.match.params.keySorted;
   const prevSort: ?string = props.match.params.sortType;
-  let url = '/';
+  let url: string = '/';
   if (prevKey !== props.name) {
     url = '/' + props.name + `/${SORT_TYPES.direct}`;
   } else {

@@ -1,15 +1,17 @@
+// @flow
+
 import { createSelector } from 'reselect';
 
 const Sort = (
   key: string,
-  profilesArray: Array<Object>,
+  profilesArray: Array<{ obj: string }>,
   sortType: string
-): Array<Object> => {
+): Array<{ obj: string }> => {
   if (!key) {
     return profilesArray;
   }
   const sortedArray = [
-    ...profilesArray.sort((obj1: Object, obj2: Object) =>
+    ...profilesArray.sort((obj1: { obj: string }, obj2: { obj: string }) =>
       obj1[key].toLowerCase() > obj2[key].toLowerCase()
         ? 1
         : obj2[key].toLowerCase() > obj1[key].toLowerCase()
@@ -24,15 +26,15 @@ const Sort = (
   }
 };
 
-const getCurKey = state => {
+const getCurKey = (state: Object): { currentKey: string } => {
   return state.currentKey;
 };
 
-const getProfiles = state => {
+const getProfiles = (state: Object): { profiles: Array<{ obj: string }> } => {
   return state.profiles;
 };
 
-const currentType = state => {
+const currentType = (state: Object): { currentType: string } => {
   return state.currentType;
 };
 

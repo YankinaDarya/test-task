@@ -30,7 +30,9 @@ const App = props => {
   );
 };
 
-const mapStateToProps = (state: Object): Object => {
+const mapStateToProps = (
+  state: Object
+): { status: Array<boolean>, error: string } => {
   return {
     status: state.status,
     error: state.error,

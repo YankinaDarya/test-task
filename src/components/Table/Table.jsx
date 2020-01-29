@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -27,7 +27,9 @@ const Table = props => {
   );
 };
 
-const mapStateToProps = (state: Object) => {
+const mapStateToProps = (
+  state: Object
+): { data: Array<{ obj: string }>, headers: Array<string> } => {
   return {
     data: getSortedData(state),
     headers: state.keys,

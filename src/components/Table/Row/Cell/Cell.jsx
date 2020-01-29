@@ -3,7 +3,7 @@
 import React from 'react';
 import style from './Cell.module.css';
 
-const Cell = (props: Object) => {
+const Cell = (props: { item: string }) => {
   return <div className={style.cell}>{props.item}</div>;
 };
 
